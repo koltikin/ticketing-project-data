@@ -2,9 +2,6 @@ package com.cydeo.controller;
 
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.enums.Status;
-import com.cydeo.service.ProjectService;
-import com.cydeo.service.TaskService;
-import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +14,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 @RequestMapping("/task")
 public class TaskController {
-    private final ProjectService projectService;
+  /*  private final ProjectService projectService;
     private final UserService userService;
     private final TaskService taskService;
 
@@ -131,5 +128,5 @@ public class TaskController {
 
     }
 
-
+*/
 }
