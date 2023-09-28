@@ -46,28 +46,28 @@ public class UserController {
 //        userService.deleteById(username);
 //        return "redirect:/user/create";
 //    }
-//    @GetMapping("/update/{userName}")
-//    public String userUpdate(@PathVariable("userName") String username, Model model){
-//
-//        model.addAttribute("user",userService.findById(username));
-//        model.addAttribute("roles",roleService.findAll());
-//        model.addAttribute("userList",userService.findAll());
-//
-//        return "/user/update";
-//    }
-//
-//    @PostMapping("/update-save")
-//    public String userUpdate(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
-//        if (bindingResult.hasErrors()){
-//            model.addAttribute("roles",roleService.findAll());
-//            model.addAttribute("userList",userService.findAll());
-//            return "/user/update";
-//        }
-//
-//        userService.update(user);
-//
-//        return "redirect:/user/create";
-//    }
+    @GetMapping("/update/{userName}")
+    public String userUpdate(@PathVariable("userName") String username, Model model){
+
+        model.addAttribute("user",userService.findById(username));
+        model.addAttribute("roles",roleService.findAll());
+        model.addAttribute("userList",userService.findAll());
+
+        return "/user/update";
+    }
+
+    @PostMapping("/update-save")
+    public String userUpdate(@ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            model.addAttribute("roles",roleService.findAll());
+            model.addAttribute("userList",userService.findAll());
+            return "/user/update";
+        }
+
+        userService.update(user);
+
+        return "redirect:/user/create";
+    }
 
 
 }
