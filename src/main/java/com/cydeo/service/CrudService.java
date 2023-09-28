@@ -9,5 +9,5 @@ public interface CrudService<D,ID> {
     D findById(ID id);
     void save(D dto);
     void update(D dto);
-    void delete(D dto);
+    void delete(ID id);
 }

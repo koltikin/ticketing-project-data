@@ -6,7 +6,6 @@ import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +45,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(UserDTO dto) {
-        repository.delete(mapper.convertToEntity(dto));
+    public void delete(String username) {
+        User user = repository.findByUserName(username);
+        repository.delete(user);
 
     }
 }

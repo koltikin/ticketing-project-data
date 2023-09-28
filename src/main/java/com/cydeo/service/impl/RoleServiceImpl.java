@@ -42,7 +42,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void delete(RoleDTO dto) {
+    public void delete(Long Id) {
 
     }
+
 }
