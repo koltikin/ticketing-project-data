@@ -22,7 +22,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> findAll() {
         return repository.findAll(Sort.by("firstName")).stream()
-                .filter(user -> !user.getIsDeleted())
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }

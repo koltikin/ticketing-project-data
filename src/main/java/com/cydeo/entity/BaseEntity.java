@@ -1,12 +1,12 @@
 package com.cydeo.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @MappedSuperclass
