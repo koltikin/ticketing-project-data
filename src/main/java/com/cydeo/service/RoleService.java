@@ -4,7 +4,6 @@ import com.cydeo.dto.RoleDTO;
 
 import java.util.List;
 
-public interface RoleService {
-    List<RoleDTO> findAllRoles();
-    RoleDTO findById(Long id);
+public interface RoleService extends CrudService<RoleDTO,Long>{
+
 }

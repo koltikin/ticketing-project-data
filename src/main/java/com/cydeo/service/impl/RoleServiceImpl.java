@@ -17,7 +17,7 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository repository;
     private final RoleMapper roleMapper;
     @Override
-    public List<RoleDTO> findAllRoles() {
+    public List<RoleDTO> findAll() {
         List<Role> roleList = repository.findAll();
 
         return roleList.stream()
@@ -28,6 +28,22 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDTO findById(Long id) {
-        return null;
+        return roleMapper.convertToDto(repository.findById(id).get());
+
+    }
+
+    @Override
+    public void save(RoleDTO dto) {
+
+    }
+
+    @Override
+    public void update(RoleDTO dto) {
+
+    }
+
+    @Override
+    public void delete(RoleDTO dto) {
+
     }
 }

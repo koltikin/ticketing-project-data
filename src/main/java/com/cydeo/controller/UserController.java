@@ -1,5 +1,6 @@
 package com.cydeo.controller;
 
+import com.cydeo.dto.RoleDTO;
 import com.cydeo.dto.UserDTO;
 import com.cydeo.service.RoleService;
 import com.cydeo.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -20,24 +22,24 @@ public class UserController {
     @GetMapping("/create")
     public String userCreate(Model model){
         model.addAttribute("user",new UserDTO());
-        model.addAttribute("roles",roleService.findAllRoles());
-        model.addAttribute("userList",userService.findAllUsers());
+        model.addAttribute("roles",roleService.findAll());
+        model.addAttribute("userList",userService.findAll());
         return "user/create";
     }
-//    @PostMapping("/save")
-//    public String userSave(@Valid @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
-//
-//        if(bindingResult.hasErrors()){
-//
-//            model.addAttribute("roles",roleService.findAll());
-//            model.addAttribute("userList",userService.findAll());
-//
-//            return "user/create";
-//
-//        }
-//        userService.save(user);
-//        return "redirect:/user/create";
-//    }
+    @PostMapping("/save")
+    public String userSave(@ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model){
+
+        if(bindingResult.hasErrors()){
+
+            model.addAttribute("roles",roleService.findAll());
+            model.addAttribute("userList",userService.findAll());
+
+            return "user/create";
+
+        }
+        userService.save(user);
+        return "redirect:/user/create";
+    }
 //
 //    @GetMapping("/delete/{userName}")
 //    public String userDelete(@PathVariable("userName") String username){
