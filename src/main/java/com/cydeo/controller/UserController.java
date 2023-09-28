@@ -40,12 +40,12 @@ public class UserController {
         userService.save(user);
         return "redirect:/user/create";
     }
-//
-//    @GetMapping("/delete/{userName}")
-//    public String userDelete(@PathVariable("userName") String username){
-//        userService.deleteById(username);
-//        return "redirect:/user/create";
-//    }
+
+    @GetMapping("/delete/{userName}")
+    public String userDelete(@PathVariable("userName") String username){
+        userService.delete(username);
+        return "redirect:/user/create";
+    }
     @GetMapping("/update/{userName}")
     public String userUpdate(@PathVariable("userName") String username, Model model){
 
