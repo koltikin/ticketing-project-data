@@ -2,6 +2,7 @@ package com.cydeo.service.impl;
 
 import com.cydeo.Repository.UserRepository;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -37,7 +38,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO dto) {
-        repository.save(mapper.convertToEntity(dto));
+        Long old_user_id = repository.findByUserName(dto.getUserName()).getId();
+        User new_user = mapper.convertToEntity(dto);
+        new_user.setId(old_user_id);
+        repository.save(new_user);
 
     }
 
