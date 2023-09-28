@@ -1,40 +1,52 @@
 package com.cydeo.service.impl;
-import com.cydeo.dto.RoleDTO;
+
+import com.cydeo.Repository.UserRepository;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.User;
+import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl extends AbstractMapService<UserDTO,String> implements UserService {
-    @Override
-    public UserDTO save(UserDTO user) {
-        return super.save(user,user.getUserName());
-    }
-    @Override
-    public UserDTO findById(String userName) {
-        return super.findById(userName);
-    }
+@AllArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserMapper mapper;
+    private final UserRepository repository;
+
     @Override
     public List<UserDTO> findAll() {
-        return super.findAll();
-    }
-    @Override
-    public void deleteById(String userName) {
-        super.deleteById(userName);
-    }
-
-    @Override
-    public void update(UserDTO user) {
-        super.update(user,user.getUserName());
-    }
-
-    @Override
-    public List<UserDTO> findManagers() {
-        return findAll().stream()
-                .filter(user->user.getRole().getDescription().equals("Manager"))
+        return repository.findAll(Sort.by("firstName")).stream()
+                .map(mapper::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserDTO findById(String userName) {
+       return mapper.convertToDto(repository.findByUserName(userName));
+    }
+    @Override
+    public void save(UserDTO dto) {
+        repository.save(mapper.convertToEntity(dto));
+
+    }
+
+    @Override
+    public void update(UserDTO dto) {
+        Long old_user_id = repository.findByUserName(dto.getUserName()).getId();
+        User new_user = mapper.convertToEntity(dto);
+        new_user.setId(old_user_id);
+        repository.save(new_user);
+
+    }
+
+    @Override
+    public void delete(String username) {
+        repository.deleteByUserName(username);
+
     }
 }
