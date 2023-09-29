@@ -47,14 +47,14 @@ public class ProjectControl {
     }
 
 
-//    @GetMapping("/complete/{projectCode}")
-//    public String projectComplete(@PathVariable("projectCode") String projectCode){
-//
-//        projectService.projectComplete(projectCode);
-//
-//        return "redirect:/project/create";
-//    }
-//
+    @GetMapping("/complete/{projectCode}")
+    public String projectComplete(@PathVariable("projectCode") String projectCode){
+
+        projectService.projectComplete(projectCode);
+
+        return "redirect:/project/create";
+    }
+
     @GetMapping("/delete/{projectCode}")
     public String projectDelete(@PathVariable("projectCode") String projectCode){
 
