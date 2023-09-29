@@ -11,6 +11,7 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Long id;
 
     @NotBlank
     @Size(max = 20,min = 2)
