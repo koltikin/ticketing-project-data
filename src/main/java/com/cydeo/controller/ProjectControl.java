@@ -23,30 +23,30 @@ public class ProjectControl {
     public String projectCreate(Model model){
         model.addAttribute("project",new ProjectDTO());
         model.addAttribute("projectList", projectService.findAll());
-        model.addAttribute("managers", userService.findManagers());
+        model.addAttribute("managers", userService.findByRoleDescription("Manager"));
 
         return "/project/create";
     }
 
-//    @PostMapping("/create")
-//    public String projectCreateSave(@Valid @ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
-//
-//        if (bindingResult.hasErrors()){
-//
-//            model.addAttribute("projectList", projectService.findAll());
-//            model.addAttribute("managers", userService.findManagers());
-//
-//            return "/project/create";
-//        }
-//
-//
-//        projectService.save(project);
-//
-//
-//        return "redirect:/project/create";
-//    }
-//
-//
+    @PostMapping("/create")
+    public String projectCreateSave(@ModelAttribute("project") ProjectDTO project, BindingResult bindingResult, Model model){
+
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("projectList", projectService.findAll());
+            model.addAttribute("managers", userService.findByRoleDescription("Manager"));
+
+            return "/project/create";
+        }
+
+
+        projectService.save(project);
+
+
+        return "redirect:/project/create";
+    }
+
+
 //    @GetMapping("/complete/{projectCode}")
 //    public String projectComplete(@PathVariable("projectCode") String projectCode){
 //

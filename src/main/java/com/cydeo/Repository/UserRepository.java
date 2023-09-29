@@ -13,6 +13,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Transactional
     void deleteByUserName(String username);
 
-    List<User> findByRoleId(Long id);
+    List<User> findByRole_DescriptionIgnoreCase(String role_description);
 
 }
