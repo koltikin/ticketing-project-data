@@ -2,13 +2,17 @@ package com.cydeo.service.impl;
 
 import com.cydeo.Repository.ProjectRepository;
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.Project;
+import com.cydeo.entity.User;
 import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
+import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.ProjectService;
+import com.cydeo.service.TaskService;
+import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +23,9 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper mapper;
     private final ProjectRepository repository;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final TaskService taskService;
     @Override
     public List<ProjectDTO> findAll() {
         return (repository.findAll(Sort.by("projectName"))).stream()
@@ -62,5 +69,22 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = repository.findByProjectCode(projectCode);
         project.setProjectStatus(Status.COMPLETE);
         repository.save(project);
+    }
+
+    @Override
+    public List<ProjectDTO> findByProjectDetail() {
+        UserDTO currentManagerDTO = userService.findById("harold@manager.com");
+        User currentManager = userMapper.convertToEntity(currentManagerDTO);
+        List<Project> projects = repository.findByProjectManager(currentManager);
+
+        return  projects.stream().map(prj->{
+            ProjectDTO prjDTO = mapper.convertToDto(prj);
+
+            prjDTO.setCompletedCount(taskService.getAllCompletedTaskCount(prjDTO.getProjectCode()));
+            prjDTO.setUnfinishedCount(taskService.getAllUnfinishedTaskCount(prjDTO.getProjectCode()));
+
+            return prjDTO;
+        }).collect(Collectors.toList());
+
     }
 }
