@@ -30,6 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void save(TaskDTO dto) {
+        repository.save(mapper.convertToEntity(dto));
 
     }
 

@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -37,4 +38,11 @@ public class Task extends BaseEntity{
 
     @Column(columnDefinition = "DATE")
     private LocalDate assignedDate;
+
+
+    protected void onPrePersist(){
+        super.onPrePersist();
+        this.assignedDate = LocalDate.now();
+        this.taskStatus = Status.OPEN;
+    }
 }

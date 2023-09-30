@@ -26,31 +26,31 @@ public class TaskController {
 
         model.addAttribute("task", new TaskDTO());
         model.addAttribute("projects",projectService.findAll());
-        model.addAttribute("employees", userService.findAll());
+        model.addAttribute("employees", userService.findAllByRole("employee"));
         model.addAttribute("tasksList", taskService.findAll());
 
         return "/task/create";
 
     }
 
-//    @PostMapping("/create")
-//    public String taskCreateSave(@Valid @ModelAttribute("task") TaskDTO task, BindingResult bindingResult,Model model){
-//
-//        if (bindingResult.hasErrors()){
-//
-//            model.addAttribute("projects",projectService.findAll());
-//            model.addAttribute("employees", userService.findAll());
-//            model.addAttribute("tasksList", taskService.findAll());
-//
-//            return "/task/create";
-//
-//        }
-//
-//        taskService.save(task);
-//
-//        return "redirect:/task/create";
-//
-//    }
+    @PostMapping("/create")
+    public String taskCreateSave(@ModelAttribute("task") TaskDTO task, BindingResult bindingResult,Model model){
+
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("projects",projectService.findAll());
+            model.addAttribute("employees", userService.findAllByRole("employee"));
+            model.addAttribute("tasksList", taskService.findAll());
+
+            return "/task/create";
+
+        }
+
+        taskService.save(task);
+
+        return "redirect:/task/create";
+
+    }
 //
 //    @GetMapping("/delete/{id}")
 //    public String taskDelete(@PathVariable("id") Long id){
