@@ -42,6 +42,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void update(TaskDTO dto) {
+        repository.save(mapper.convertToEntity(dto));
 
     }
 
