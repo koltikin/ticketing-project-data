@@ -32,4 +32,16 @@ public class ProjectDTO {
     private int completedCount;
 
 
+    public ProjectDTO(String projectName, String projectCode, UserDTO projectManager, LocalDate projectStartDate, LocalDate projectEndDate, String projectDetail, Status projectStatus) {
+        this.projectName = projectName;
+        this.projectCode = projectCode;
+        this.projectManager = projectManager;
+        this.projectStartDate = projectStartDate;
+        this.projectEndDate = projectEndDate;
+        this.projectDetail = projectDetail;
+        this.projectStatus = projectStatus;
+    }
+
+
+
 }
