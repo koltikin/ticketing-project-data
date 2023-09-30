@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -42,9 +43,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void delete(Long id) {
-        Task task = repository.findById(id).get();
-        task.setIsDeleted(true);
-        repository.save(task);
+        Optional<Task> task = repository.findById(id);
+        if (task.isPresent()) {
+            task.get().setIsDeleted(true);
+            repository.save(task.get());
+        }
 
     }
 }
