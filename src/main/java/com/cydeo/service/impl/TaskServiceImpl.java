@@ -43,4 +43,14 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long aLong) {
 
     }
+
+    @Override
+    public int getAllCompletedTaskCount(String projectCode) {
+        return repository.totalCompletedTaskCount(projectCode);
+    }
+
+    @Override
+    public int getAllUnfinishedTaskCount(String projectCode) {
+        return repository.totalUnfinishedTaskCount(projectCode);
+    }
 }
