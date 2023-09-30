@@ -51,14 +51,14 @@ public class TaskController {
         return "redirect:/task/create";
 
     }
-//
-//    @GetMapping("/delete/{id}")
-//    public String taskDelete(@PathVariable("id") Long id){
-//
-//        taskService.deleteById(id);
-//        return "redirect:/task/create";
-//
-//    }
+
+    @GetMapping("/delete/{id}")
+    public String taskDelete(@PathVariable("id") Long id){
+
+        taskService.delete(id);
+        return "redirect:/task/create";
+
+    }
 //
 //    @GetMapping("/update/{id}")
 //    public String taskUpdate(@PathVariable("id") Long id, Model model){
