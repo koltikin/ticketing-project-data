@@ -89,7 +89,7 @@ public class ProjectControl {
 
         return "redirect:/project/create";
     }
-//
+
 //    @GetMapping("/manager/project-status")
 //    public String projectStatus(Model model){
 //

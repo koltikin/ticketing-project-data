@@ -59,38 +59,38 @@ public class TaskController {
         return "redirect:/task/create";
 
     }
-//
-//    @GetMapping("/update/{id}")
-//    public String taskUpdate(@PathVariable("id") Long id, Model model){
-//
-//        model.addAttribute("task", taskService.findById(id));
-//        model.addAttribute("projects",projectService.findAll());
-//        model.addAttribute("employees", userService.findAll());
-//        model.addAttribute("tasksList", taskService.findAll());
-//
-//        return "/task/update";
-//
-//    }
-//
-//    @PostMapping("/update/{id}/{taskStatus}/{assignedDate}")
-//    public String taskUpdateSAve(@Valid @ModelAttribute("task") TaskDTO task,BindingResult bindingResult,Model model){
-//
-//
-//        if (bindingResult.hasErrors()){
-//
-//            model.addAttribute("projects",projectService.findAll());
-//            model.addAttribute("employees", userService.findAll());
-//            model.addAttribute("tasksList", taskService.findAll());
-//
-//            return "/task/update";
-//
-//        }
-//
-//        taskService.update(task);
-//
-//        return "redirect:/task/create";
-//
-//    }
+
+    @GetMapping("/update/{id}")
+    public String taskUpdate(@PathVariable("id") Long id, Model model){
+
+        model.addAttribute("task", taskService.findById(id));
+        model.addAttribute("projects",projectService.findAll());
+        model.addAttribute("employees", userService.findAllByRole("employee"));
+        model.addAttribute("tasksList", taskService.findAll());
+
+        return "/task/update";
+
+    }
+
+    @PostMapping("/update/{id}/{taskStatus}/{assignedDate}")
+    public String taskUpdateSAve(@ModelAttribute("task") TaskDTO task,BindingResult bindingResult,Model model){
+
+
+        if (bindingResult.hasErrors()){
+
+            model.addAttribute("projects",projectService.findAll());
+            model.addAttribute("employees", userService.findAllByRole("employee"));
+            model.addAttribute("tasksList", taskService.findAll());
+
+            return "/task/update";
+
+        }
+
+        taskService.update(task);
+
+        return "redirect:/task/create";
+
+    }
 //
 //    @GetMapping("/pending-tasks")
 //    public String pendingTasks(Model model){

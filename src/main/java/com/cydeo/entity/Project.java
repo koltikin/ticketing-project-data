@@ -35,14 +35,4 @@ public class Project extends BaseEntity{
     private Status projectStatus;
 
 
-    private int unfinishedCount;
-    private int completedCount;
-
-    protected void onPrePersist(){
-        super.onPrePersist();
-        this.completedCount = 0;
-        this.unfinishedCount = 0;
-
-    }
-
 }

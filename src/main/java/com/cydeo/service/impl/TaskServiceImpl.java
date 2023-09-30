@@ -1,9 +1,12 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.Repository.TaskRepository;
+import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
 import com.cydeo.mapper.TaskMapper;
+import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -26,7 +29,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDTO findById(Long aLong) {
+    public TaskDTO findById(Long id) {
+        Optional<Task> task = repository.findById(id);
+        if (task.isPresent()){
+            return mapper.convertToDto(task.get());
+        }
         return null;
     }
 
@@ -38,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void update(TaskDTO dto) {
+        repository.save(mapper.convertToEntity(dto));
 
     }
 
