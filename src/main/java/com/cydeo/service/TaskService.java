@@ -2,6 +2,7 @@ package com.cydeo.service;
 
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.entity.Task;
+import org.springframework.data.jpa.repository.Query;
 
 public interface TaskService extends CrudService<TaskDTO, Long>{
 

@@ -13,7 +13,6 @@ import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
