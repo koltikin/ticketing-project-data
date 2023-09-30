@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> findByRoleDescription(String description) {
+    public List<UserDTO> findAllByRole(String description) {
         return repository.findByRole_DescriptionIgnoreCase(description)
                 .stream().map(mapper::convertToDto)
                 .collect(Collectors.toList());
