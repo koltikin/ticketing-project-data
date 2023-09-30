@@ -81,8 +81,8 @@ public class ProjectServiceImpl implements ProjectService {
         return  projects.stream().map(prj->{
             ProjectDTO prjDTO = mapper.convertToDto(prj);
 
-            prjDTO.setCompletedCount(taskService.getAllCompletedTasks(prjDTO.getProjectCode()));
-            prjDTO.setUnfinishedCount(taskService.getAllUnfinishedTasks(prjDTO.getProjectCode()));
+            prjDTO.setCompletedCount(taskService.getAllCompletedTaskCount(prjDTO.getProjectCode()));
+            prjDTO.setUnfinishedCount(taskService.getAllUnfinishedTaskCount(prjDTO.getProjectCode()));
 
             return prjDTO;
         }).collect(Collectors.toList());
