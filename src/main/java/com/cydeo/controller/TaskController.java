@@ -122,13 +122,13 @@ public class TaskController {
 //
 //    }
 //
-//    @GetMapping("/archive-tasks")
-//    public String taskArchive(Model model){
-//
-//        model.addAttribute("archivedTasks",taskService.findCompletedTasks());
-//
-//        return "/task/archive";
-//
-//    }
+    @GetMapping("/archive-tasks")
+    public String taskArchive(Model model){
+
+        model.addAttribute("archivedTasks",taskService.getAllCompletedTasks());
+
+        return "/task/archive";
+
+    }
 
 }
