@@ -24,7 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository repository;
     @Override
     public List<TaskDTO> findAll() {
-        return repository.findAll(Sort.by("assignedDate")).stream()
+        return repository.findAll(Sort.by(Sort.Order.desc("assignedDate"))).stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -46,7 +46,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void update(TaskDTO dto) {
-        repository.save(mapper.convertToEntity(dto));
+        Long task_id = dto.getId();
+        Optional<Task> task = repository.findById(task_id);
+        task.ifPresent(value -> value.setTaskStatus(dto.getTaskStatus()));
+        repository.save(task.get());
 
     }
 
