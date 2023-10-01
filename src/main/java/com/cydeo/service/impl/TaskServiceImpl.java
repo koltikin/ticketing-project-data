@@ -5,6 +5,7 @@ import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
+import com.cydeo.enums.Status;
 import com.cydeo.mapper.TaskMapper;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
@@ -23,7 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository repository;
     @Override
     public List<TaskDTO> findAll() {
-        return repository.findAll(Sort.by("assignedDate")).stream()
+        return repository.findAll(Sort.by(Sort.Order.desc("assignedDate"))).stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
@@ -45,7 +46,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void update(TaskDTO dto) {
-        repository.save(mapper.convertToEntity(dto));
+        Long task_id = dto.getId();
+        Optional<Task> task = repository.findById(task_id);
+        task.ifPresent(value -> value.setTaskStatus(dto.getTaskStatus()));
+        repository.save(task.get());
 
     }
 
@@ -68,4 +72,21 @@ public class TaskServiceImpl implements TaskService {
     public int getAllUnfinishedTaskCount(String projectCode) {
         return repository.totalUnfinishedTaskCount(projectCode);
     }
+
+    @Override
+    public List<TaskDTO> getAllTasksNotCompleted() {
+        return repository.findAllNotCompletedTask().stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TaskDTO> getAllCompletedTasks() {
+        return repository.findAllCompletedTask().stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
+
+    }
+
+
 }
