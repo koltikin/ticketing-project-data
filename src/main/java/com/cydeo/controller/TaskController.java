@@ -91,16 +91,16 @@ public class TaskController {
         return "redirect:/task/create";
 
     }
-//
-//    @GetMapping("/pending-tasks")
-//    public String pendingTasks(Model model){
-//
-//        model.addAttribute("pendingTasks",taskService.findNotCompletedTasks());
-//
-//        return "/task/pending-tasks";
-//
-//    }
-//
+
+    @GetMapping("/pending-tasks")
+    public String pendingTasks(Model model){
+
+        model.addAttribute("pendingTasks",taskService.getAllTasksNotCompleted());
+
+        return "/task/pending-tasks";
+
+    }
+
 //    @GetMapping("/task-update/{id}")
 //    public String taskUpdateStatus(@PathVariable("id") Long id, Model model){
 //
