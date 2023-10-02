@@ -7,17 +7,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProjectMapper extends BaseMapper<ProjectDTO,Project>{
+
     public ProjectMapper(ModelMapper modelMapper) {
         super(modelMapper);
     }
 
     @Override
-    protected Class<ProjectDTO> getDtoClass() {
+    public Class<ProjectDTO> getDtoClass() {
         return ProjectDTO.class;
     }
 
     @Override
-    protected Class<Project> getEntityClass() {
+    public Class<Project> getEntityClass() {
         return Project.class;
     }
 }

@@ -2,25 +2,26 @@ package com.cydeo.mapper;
 
 import com.cydeo.dto.RoleDTO;
 import com.cydeo.entity.Role;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 
 @Component
-public class RoleMapper {
+public class RoleMapper extends BaseMapper<RoleDTO,Role>{
 
-    private final ModelMapper modelMapper;
+
     public RoleMapper(ModelMapper modelMapper) {
-        this.modelMapper = modelMapper;
+        super(modelMapper);
     }
 
-    public Role convertToEntity(RoleDTO dto){
-        return modelMapper.map(dto,Role.class);
-
+    @Override
+    public Class<RoleDTO> getDtoClass() {
+        return RoleDTO.class;
     }
 
-    public RoleDTO convertToDto(Role entity){
-        return modelMapper.map(entity,RoleDTO.class);
-
+    @Override
+    public Class<Role> getEntityClass() {
+        return Role.class;
     }
 }

@@ -1,6 +1,8 @@
 package com.cydeo.service;
 
+import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
 import com.cydeo.enums.Status;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +17,7 @@ public interface TaskService extends CrudService<TaskDTO, Long>{
     List<TaskDTO> getAllTasksNotCompleted();
 
     List<TaskDTO> getAllCompletedTasks();
+
+    void deleteTasksByProject(Project project);
 
 }

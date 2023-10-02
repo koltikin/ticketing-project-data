@@ -2,6 +2,9 @@ package com.cydeo.mapper;
 
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+
+import java.lang.reflect.Type;
 
 @AllArgsConstructor
 public abstract class BaseMapper<D, E> {
@@ -13,8 +16,7 @@ public abstract class BaseMapper<D, E> {
     public E convertToEntity(D dto){
         return modelMapper.map(dto,getEntityClass());
     }
-
-    protected abstract Class<D> getDtoClass();
-    protected abstract Class<E> getEntityClass();
+    public abstract Class<D> getDtoClass();
+    public abstract Class<E> getEntityClass();
 
 }

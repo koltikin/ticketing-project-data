@@ -6,6 +6,7 @@ import com.cydeo.dto.TaskDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
 import com.cydeo.enums.Status;
+import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.TaskMapper;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
     private final TaskMapper mapper;
     private final TaskRepository repository;
+    private final ProjectMapper projectMapper;
     @Override
     public List<TaskDTO> findAll() {
         return repository.findAll(Sort.by(Sort.Order.desc("assignedDate"))).stream()
@@ -85,6 +87,14 @@ public class TaskServiceImpl implements TaskService {
         return repository.findAllCompletedTask().stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public void deleteTasksByProject(Project project) {
+        List<Task> tasks = repository.findAllByProject(project);
+
+        tasks.forEach(task -> repository.deleteById(task.getId()));
 
     }
 

@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +42,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void save(ProjectDTO dto) {
-        Project project = mapper.convertToEntity(dto);
-        project.setProjectStatus(Status.OPEN);
-        repository.save(project);
+//        if (repository.findByProjectCode(dto.getProjectCode()) == null) {
+            Project project = mapper.convertToEntity(dto);
+            project.setProjectStatus(Status.OPEN);
+            repository.save(project);
+//        }
 
     }
 
@@ -59,8 +63,15 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void delete(String projectCode) {
         Project delProject  = repository.findByProjectCode(projectCode);
-                delProject.setIsDeleted(true);
-                repository.save(delProject);
+
+        delProject.setProjectCode(projectCode +"-"+ LocalDateTime.now());
+        delProject.setIsDeleted(true);
+
+        repository.save(delProject);
+
+        taskService.deleteTasksByProject(delProject);
+
+
 
     }
 

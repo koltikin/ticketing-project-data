@@ -1,5 +1,7 @@
 package com.cydeo.Repository;
 
+import com.cydeo.dto.ProjectDTO;
+import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
 import com.cydeo.enums.Status;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +26,5 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query("SELECT t FROM Task t WHERE t.taskStatus = 'COMPLETE'")
     List<Task> findAllCompletedTask();
 
+    List<Task> findAllByProject(Project project);
 }
