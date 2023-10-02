@@ -3,13 +3,17 @@ package com.cydeo.service.impl;
 import com.cydeo.Repository.TaskRepository;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
+import com.cydeo.dto.UserDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
+import com.cydeo.entity.User;
 import com.cydeo.enums.Status;
 import com.cydeo.mapper.ProjectMapper;
 import com.cydeo.mapper.TaskMapper;
+import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
+import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,7 +27,9 @@ import java.util.stream.Collectors;
 public class TaskServiceImpl implements TaskService {
     private final TaskMapper mapper;
     private final TaskRepository repository;
-    private final ProjectMapper projectMapper;
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     @Override
     public List<TaskDTO> findAll() {
         return repository.findAll(Sort.by(Sort.Order.desc("assignedDate"))).stream()
@@ -77,14 +83,18 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getAllTasksNotCompleted() {
-        return repository.findAllNotCompletedTask().stream()
+        UserDTO loggedInUser = userService.findById("john@employee.com");
+        User user = userMapper.convertToEntity(loggedInUser);
+        return repository.findAllByTaskStatusIsNotAndAssignedEmployee(Status.COMPLETE, user).stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<TaskDTO> getAllCompletedTasks() {
-        return repository.findAllCompletedTask().stream()
+        UserDTO loggedInUser = userService.findById("john@employee.com");
+        User user = userMapper.convertToEntity(loggedInUser);
+        return repository.findAllByTaskStatusIsAndAssignedEmployee(Status.COMPLETE, user).stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
 
@@ -103,8 +113,7 @@ public class TaskServiceImpl implements TaskService {
         List<Task> tasks = repository.findAllByProject(project);
         tasks.forEach(task -> {
             task.setTaskStatus(Status.COMPLETE);
-            TaskDTO taskDTO = mapper.convertToDto(task);
-            update(taskDTO);
+            repository.save(task);
         });
     }
 }
