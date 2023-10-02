@@ -119,11 +119,10 @@ public class TaskController {
 
         taskService.update(task);
 
-
         return "redirect:/task/pending-tasks";
 
     }
-//
+
     @GetMapping("/archive-tasks")
     public String taskArchive(Model model){
 
