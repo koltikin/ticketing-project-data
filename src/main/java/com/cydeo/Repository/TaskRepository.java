@@ -12,12 +12,12 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task,Long> {
     @Query("SELECT COUNT(t) FROM Task t WHERE t.project.projectCode = ?1 AND " +
-            "t.taskStatus = 'COMPLETED'")
+            "t.taskStatus = 'COMPLETE'")
     int totalCompletedTaskCount(String projectCode);
 
     @Query(nativeQuery = true, value = "SELECT count(*) FROM tasks JOIN projects p" +
             " ON tasks.project_id = p.id WHERE p.project_code = ?1" +
-            " AND tasks.task_status <> 'COMPLETED'")
+            " AND tasks.task_status <> 'COMPLETE'")
     int totalUnfinishedTaskCount(String projectCode);
 
 

@@ -97,13 +97,13 @@ public class ProjectControl {
 
         return "/manager/project-status";
     }
-//    @GetMapping("/manager/project-status/complete/{projectCode}")
-//    public String projectStatusComplete(@PathVariable("projectCode") String projectCode) {
-//
-//        projectService.findById(projectCode).setProjectStatus(Status.COMPLETE);
-//
-//
-//        return "redirect:/project/manager/project-status";
-//    }
+    @GetMapping("/manager/project-status/complete/{projectCode}")
+    public String projectStatusComplete(@PathVariable("projectCode") String projectCode) {
+
+        projectService.projectComplete(projectCode);
+
+
+        return "redirect:/project/manager/project-status";
+    }
 
 }
