@@ -20,4 +20,6 @@ public interface TaskService extends CrudService<TaskDTO, Long>{
 
     void deleteTasksByProject(Project project);
 
+    void updateTasksByProject(Project project);
+
 }

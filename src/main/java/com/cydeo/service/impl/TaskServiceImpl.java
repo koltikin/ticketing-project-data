@@ -98,5 +98,13 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
-
+    @Override
+    public void updateTasksByProject(Project project) {
+        List<Task> tasks = repository.findAllByProject(project);
+        tasks.forEach(task -> {
+            task.setTaskStatus(Status.COMPLETE);
+            TaskDTO taskDTO = mapper.convertToDto(task);
+            update(taskDTO);
+        });
+    }
 }

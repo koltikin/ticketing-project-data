@@ -80,6 +80,9 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = repository.findByProjectCode(projectCode);
         project.setProjectStatus(Status.COMPLETE);
         repository.save(project);
+
+        taskService.updateTasksByProject(project);
+
     }
 
     @Override
