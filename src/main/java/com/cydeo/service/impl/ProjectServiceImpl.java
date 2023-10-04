@@ -101,4 +101,9 @@ public class ProjectServiceImpl implements ProjectService {
         }).collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<ProjectDTO> listAllNotCompletedPrjByManager(User user) {
+        return null;
+    }
 }

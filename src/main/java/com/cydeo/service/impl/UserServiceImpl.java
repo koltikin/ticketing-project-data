@@ -1,9 +1,14 @@
 package com.cydeo.service.impl;
 
 import com.cydeo.Repository.UserRepository;
+import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
+import com.cydeo.entity.Project;
 import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
+import com.cydeo.service.ProjectService;
+import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -17,6 +22,8 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
     private final UserRepository repository;
+    private final ProjectService projectService;
+    private final TaskService taskService;
 
     @Override
     public List<UserDTO> findAll() {
@@ -47,8 +54,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(String username) {
         User user = repository.findByUserName(username);
-        user.setIsDeleted(true);
-        repository.save(user);
+        if (checkIfUserCanBeDeleted(user)) {
+            user.setIsDeleted(true);
+            repository.save(user);
+        }
 
     }
 
@@ -57,5 +66,18 @@ public class UserServiceImpl implements UserService {
         return repository.findByRole_DescriptionIgnoreCase(description)
                 .stream().map(mapper::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    private boolean checkIfUserCanBeDeleted(User user){
+        switch (user.getRole().getDescription()){
+            case "Manager":
+                List<ProjectDTO> notCompletedProjects = projectService.listAllNotCompletedPrjByManager(user);
+                return notCompletedProjects.size() == 0;
+            case "employee":
+                List<TaskDTO> notCompletedTasks = taskService.listAllNotCompletedPrjByEmployee(user);
+                return notCompletedTasks.size() == 0;
+
+            default: return true;
+        }
     }
 }

@@ -116,4 +116,9 @@ public class TaskServiceImpl implements TaskService {
             repository.save(task);
         });
     }
+
+    @Override
+    public List<TaskDTO> listAllNotCompletedPrjByEmployee(User employee) {
+        return null;
+    }
 }
