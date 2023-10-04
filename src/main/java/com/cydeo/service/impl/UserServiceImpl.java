@@ -64,14 +64,14 @@ public class UserServiceImpl implements UserService {
         User user = repository.findByUserName(username);
         if (checkIfUserCanBeDeleted(user)) {
             user.setUserName(user.getUserName() + '-' + LocalDateTime.now());
-            if (user.getRole().getDescription().equals("Employee")){
-                taskService.listAllTasksByEmployee(user)
-                        .forEach(task -> task.setIsDeleted(true));
-            }
-            if (user.getRole().getDescription().equals("Manager")){
-                projectService.listAllProjectByManager(user)
-                        .forEach(prj -> prj.setIsDeleted(true));
-            }
+//            if (user.getRole().getDescription().equals("Employee")){
+//                taskService.listAllTasksByEmployee(user)
+//                        .forEach(task -> task.setIsDeleted(true));
+//            }
+//            if (user.getRole().getDescription().equals("Manager")){
+//                projectService.listAllProjectByManager(user)
+//                        .forEach(prj -> prj.setIsDeleted(true));
+//            }
             user.setIsDeleted(true);
             repository.save(user);
         }
