@@ -124,4 +124,9 @@ public class TaskServiceImpl implements TaskService {
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Task> listAllTasksByEmployee(User employee) {
+        return repository.findAllByAssignedEmployee(employee);
+    }
 }

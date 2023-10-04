@@ -25,4 +25,6 @@ public interface TaskService extends CrudService<TaskDTO, Long>{
 
     List<TaskDTO> listAllNotCompletedTaskByEmployee(User employee);
 
+    List<Task> listAllTasksByEmployee(User employee);
+
 }

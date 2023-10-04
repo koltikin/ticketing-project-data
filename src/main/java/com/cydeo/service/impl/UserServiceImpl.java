@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +63,15 @@ public class UserServiceImpl implements UserService {
     public void delete(String username) {
         User user = repository.findByUserName(username);
         if (checkIfUserCanBeDeleted(user)) {
+            user.setUserName(user.getUserName() + '-' + LocalDateTime.now());
+            if (user.getRole().getDescription().equals("Employee")){
+                taskService.listAllTasksByEmployee(user)
+                        .forEach(task -> task.setIsDeleted(true));
+            }
+            if (user.getRole().getDescription().equals("Manager")){
+                projectService.listAllProjectByManager(user)
+                        .forEach(prj -> prj.setIsDeleted(true));
+            }
             user.setIsDeleted(true);
             repository.save(user);
         }

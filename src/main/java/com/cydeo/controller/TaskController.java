@@ -115,8 +115,6 @@ public class TaskController {
     @PostMapping("/task-update/{id}")
     public String taskUpdateStatusSave(@ModelAttribute("task") TaskDTO task){
 
-        System.out.println(task);
-
         taskService.update(task);
 
         return "redirect:/task/pending-tasks";
