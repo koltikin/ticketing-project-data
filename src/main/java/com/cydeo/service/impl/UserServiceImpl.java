@@ -4,13 +4,12 @@ import com.cydeo.Repository.UserRepository;
 import com.cydeo.dto.ProjectDTO;
 import com.cydeo.dto.TaskDTO;
 import com.cydeo.dto.UserDTO;
-import com.cydeo.entity.Project;
 import com.cydeo.entity.User;
 import com.cydeo.mapper.UserMapper;
 import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
-import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -18,12 +17,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+//@AllArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserMapper mapper;
     private final UserRepository repository;
     private final ProjectService projectService;
     private final TaskService taskService;
+
+    public UserServiceImpl(UserMapper mapper, UserRepository repository, @Lazy ProjectService projectService, @Lazy TaskService taskService) {
+        this.mapper = mapper;
+        this.repository = repository;
+        this.projectService = projectService;
+        this.taskService = taskService;
+    }
 
     @Override
     public List<UserDTO> findAll() {
@@ -73,8 +79,8 @@ public class UserServiceImpl implements UserService {
             case "Manager":
                 List<ProjectDTO> notCompletedProjects = projectService.listAllNotCompletedPrjByManager(user);
                 return notCompletedProjects.size() == 0;
-            case "employee":
-                List<TaskDTO> notCompletedTasks = taskService.listAllNotCompletedPrjByEmployee(user);
+            case "Employee":
+                List<TaskDTO> notCompletedTasks = taskService.listAllNotCompletedTaskByEmployee(user);
                 return notCompletedTasks.size() == 0;
 
             default: return true;

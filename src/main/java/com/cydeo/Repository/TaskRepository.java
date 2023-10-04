@@ -1,6 +1,7 @@
 package com.cydeo.Repository;
 
 import com.cydeo.dto.ProjectDTO;
+import com.cydeo.dto.TaskDTO;
 import com.cydeo.entity.Project;
 import com.cydeo.entity.Task;
 import com.cydeo.entity.User;
@@ -31,4 +32,6 @@ public interface TaskRepository extends JpaRepository<Task,Long> {
     List<Task> findAllByTaskStatusIsAndAssignedEmployee(Status status, User user);
 
     List<Task> findAllByProject(Project project);
+
+    List<Task> findAllByAssignedEmployeeAndTaskStatusNot(User employee, Status status);
 }

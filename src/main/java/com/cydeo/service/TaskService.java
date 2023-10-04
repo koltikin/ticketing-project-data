@@ -23,6 +23,6 @@ public interface TaskService extends CrudService<TaskDTO, Long>{
 
     void updateTasksByProject(Project project);
 
-    List<TaskDTO> listAllNotCompletedPrjByEmployee(User employee);
+    List<TaskDTO> listAllNotCompletedTaskByEmployee(User employee);
 
 }

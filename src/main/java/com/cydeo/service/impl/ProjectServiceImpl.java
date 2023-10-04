@@ -12,6 +12,7 @@ import com.cydeo.service.ProjectService;
 import com.cydeo.service.TaskService;
 import com.cydeo.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper mapper;
     private final ProjectRepository repository;
     private final UserService userService;
-    private final UserMapper userMapper;
+    private final UserMapper  userMapper;
     private final TaskService taskService;
     @Override
     public List<ProjectDTO> findAll() {
@@ -103,7 +104,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectDTO> listAllNotCompletedPrjByManager(User user) {
-        return null;
+    public List<ProjectDTO> listAllNotCompletedPrjByManager(User manager) {
+        List<Project> projects =  repository.findAllByProjectManagerAndProjectStatusNot(manager,Status.COMPLETE);
+
+        return projects.stream()
+                .map(mapper::convertToDto)
+                .collect(Collectors.toList());
     }
 }
