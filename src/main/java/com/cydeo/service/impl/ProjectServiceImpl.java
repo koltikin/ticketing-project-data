@@ -111,4 +111,9 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Project> listAllProjectByManager(User manager) {
+        return repository.findAllByProjectManager(manager);
+    }
 }
