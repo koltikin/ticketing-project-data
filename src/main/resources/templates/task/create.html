@@ -150,7 +150,12 @@
                                                 <td th:text="${#temporals.format(tk.assignedDate, 'dd-MM-yyyy')}"></td>
                                                 <td th:text="${tk.taskStatus.value}"></td>
                                                 <td class="actions">
-                                                    <a th:href="@{/task/update/{id}(id = ${tk.id})}" class="btn btn-warning rounded-0">Update</a>
+                                                    <a th:unless="${tk.taskStatus.value == 'Completed'}" th:href="@{/task/update/{id}(id = ${tk.id})}"
+                                                       class="btn btn-warning rounded-0 ">Update</a>
+
+                                                    <a th:if="${tk.taskStatus.value == 'Completed'}"
+                                                       class="btn btn-warning rounded-0 disabled-button">Update</a>
+
                                                     <a th:href="@{/task/delete/{id}(id = ${tk.id})}" class="btn btn-danger rounded-0">Delete</a>
                                                 </td>
                                             </tr>
