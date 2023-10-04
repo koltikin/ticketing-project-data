@@ -22,7 +22,7 @@ public class ProjectControl {
     @GetMapping("/create")
     public String projectCreate(Model model){
         model.addAttribute("project",new ProjectDTO());
-        model.addAttribute("projectList", projectService.findAll());
+        model.addAttribute("projectList", projectService.findByProjectDetail());
         model.addAttribute("managers", userService.findAllByRole("Manager"));
 
         return "/project/create";
@@ -33,7 +33,7 @@ public class ProjectControl {
 
         if (bindingResult.hasErrors()){
 
-            model.addAttribute("projectList", projectService.findAll());
+            model.addAttribute("projectList", projectService.findByProjectDetail());
             model.addAttribute("managers", userService.findAllByRole("Manager"));
 
             return "/project/create";
@@ -67,7 +67,7 @@ public class ProjectControl {
     public String projectUpdate(@PathVariable("projectCode") String projectCode,Model model){
 
         model.addAttribute("project",projectService.findById(projectCode));
-        model.addAttribute("projectList", projectService.findAll());
+        model.addAttribute("projectList", projectService.findByProjectDetail());
         model.addAttribute("managers", userService.findAllByRole("manager"));
 
         return "/project/update";
@@ -79,7 +79,7 @@ public class ProjectControl {
 
         if (bindingResult.hasErrors()){
 
-            model.addAttribute("projectList", projectService.findAll());
+            model.addAttribute("projectList", projectService.findByProjectDetail());
             model.addAttribute("managers", userService.findAllByRole("manager"));
             return "/project/update";
 
