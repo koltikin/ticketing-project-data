@@ -183,9 +183,20 @@
                                                 <td th:text="${prj.projectManager.firstName + ' ' + prj.projectManager.lastName}"></td>
                                                 <td th:text="${prj.projectStatus.value}"></td>
                                                 <td>
-                                                    <a th:href="@{/project/update/{projectCode}(projectCode = ${prj.projectCode})}"><button type="button" class="btn btn-warning rounded-0">Update</button></a>
-                                                    <a th:href="@{/project/delete/{projectCode}(projectCode = ${prj.projectCode})}"><button type="button" class="btn btn-danger rounded-0">Delete</button></a>
-                                                    <a th:href="@{/project/complete/{projectCode}(projectCode = ${prj.projectCode})}"><button type="button" class="btn btn-info rounded-0">Complete</button></a>
+                                                    <a th:unless = "${prj.projectStatus.value == 'Completed'}" th:href="@{/project/update/{projectCode}(projectCode = ${prj.projectCode})}">
+                                                        <button type="button" class="btn btn-warning rounded-0">Update</button></a>
+
+                                                    <a th:if = "${prj.projectStatus.value == 'Completed'}" >
+                                                        <button type="button" class="btn btn-warning rounded-0 disabled-button">Update</button></a>
+
+                                                    <a th:href="@{/project/delete/{projectCode}(projectCode = ${prj.projectCode})}">
+                                                        <button type="button" class="btn btn-danger rounded-0">Delete</button></a>
+
+                                                    <a th:unless = "${prj.projectStatus.value == 'Completed'}" th:href="@{/project/complete/{projectCode}(projectCode = ${prj.projectCode})}">
+                                                        <button type="button" class="btn btn-info rounded-0">Complete</button></a>
+
+                                                    <a th:if = "${prj.projectStatus.value == 'Completed'}">
+                                                        <button type="button" class="btn btn-info rounded-0 disabled-button">Complete</button></a>
                                                 </td>
                                             </tr>
                                             </tbody>
