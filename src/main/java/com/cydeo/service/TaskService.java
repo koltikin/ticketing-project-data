@@ -21,7 +21,7 @@ public interface TaskService extends CrudService<TaskDTO, Long>{
 
     void deleteTasksByProject(Project project);
 
-    void updateTasksByProject(Project project);
+    void updateTasksByProject(ProjectDTO projectDTO);
 
     List<TaskDTO> listAllNotCompletedTaskByEmployee(User employee);
 
