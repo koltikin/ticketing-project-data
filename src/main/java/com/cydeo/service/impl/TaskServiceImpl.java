@@ -29,6 +29,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository repository;
     private final UserService userService;
     private final UserMapper userMapper;
+    private final ProjectMapper projectMapper;
 
     @Override
     public List<TaskDTO> findAll() {
@@ -56,7 +57,7 @@ public class TaskServiceImpl implements TaskService {
     public void update(TaskDTO dto) {
         Long task_id = dto.getId();
         Optional<Task> task = repository.findById(task_id);
-        task.ifPresent(value -> value.setTaskStatus(dto.getTaskStatus()));
+        task.ifPresent(tk -> tk.setTaskStatus(dto.getTaskStatus()));
         repository.save(task.get());
 
     }
@@ -109,11 +110,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void updateTasksByProject(Project project) {
-        List<Task> tasks = repository.findAllByProject(project);
-        tasks.forEach(task -> {
+    public void updateTasksByProject(ProjectDTO projectDTO) {
+        List<Task> tasks = repository.findAllByProject(projectMapper.convertToEntity(projectDTO));
+        tasks.stream().map(mapper::convertToDto).forEach(task -> {
             task.setTaskStatus(Status.COMPLETE);
-            repository.save(task);
+            update(task);
         });
     }
 

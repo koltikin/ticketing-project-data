@@ -82,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setProjectStatus(Status.COMPLETE);
         repository.save(project);
 
-        taskService.updateTasksByProject(project);
+        taskService.updateTasksByProject(mapper.convertToDto(project));
 
     }
 

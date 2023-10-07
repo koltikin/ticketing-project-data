@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAll() {
-        return repository.findAll(Sort.by("firstName")).stream()
+        return repository.findAllByIsDeletedOrderByFirstName(false).stream()
                 .map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO findById(String userName) {
-       return mapper.convertToDto(repository.findByUserName(userName));
+       return mapper.convertToDto(repository.findByUserNameAndIsDeleted(userName,false));
     }
     @Override
     public void save(UserDTO dto) {
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(UserDTO dto) {
-        Long old_user_id = repository.findByUserName(dto.getUserName()).getId();
+        Long old_user_id = repository.findByUserNameAndIsDeleted(dto.getUserName(),false).getId();
         User new_user = mapper.convertToEntity(dto);
         new_user.setId(old_user_id);
         repository.save(new_user);
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String username) {
-        User user = repository.findByUserName(username);
+        User user = repository.findByUserNameAndIsDeleted(username,false);
         if (checkIfUserCanBeDeleted(user)) {
             user.setUserName(user.getUserName() + '-' + LocalDateTime.now());
 //            if (user.getRole().getDescription().equals("Employee")){
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDTO> findAllByRole(String description) {
-        return repository.findByRole_DescriptionIgnoreCase(description)
+        return repository.findByRole_DescriptionIgnoreCaseAndIsDeleted(description,false)
                 .stream().map(mapper::convertToDto)
                 .collect(Collectors.toList());
     }
